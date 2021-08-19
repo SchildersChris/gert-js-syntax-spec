@@ -20,7 +20,7 @@ componentDeclaration
 	;
 
 parameters
-    : parameter (',' parameter)* (',' lastParameter)?
+    : parameter (COMMA parameter)* (COMMA lastParameter)?
     | lastParameter
     ;
 
@@ -45,7 +45,7 @@ statement
     ;
 
 arguments
-    : '('(argument (',' argument)* ','?)?')'
+    : LPAREN (argument (COMMA argument)* COMMA?)? RPAREN
     ;
 
 argument
@@ -53,7 +53,7 @@ argument
     ;
 
 expressions
-    : expression (',' expression)*
+    : expression (COMMA expression)*
     ;
 
 expression
@@ -69,8 +69,8 @@ assignable
 
 type
     : ID
-    | 'int'
-    | 'string'
-    | 'float'
-    | 'double'
+    | INT
+    | STRING
+    | FLOAT
+    | DOUBLE
     ;
