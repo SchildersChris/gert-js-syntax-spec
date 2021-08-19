@@ -36,7 +36,7 @@ tasks {
         arguments = arguments + listOf("-visitor", "-package", "com.schilderschris.gjsyntax", "-Xexact-output-dir")
 
         doLast {
-            val parserPackagePath = "${outputDirectory.canonicalPath}/com/schilderschris/gjsyntax/"
+            val parserPackagePath = "${outputDirectory.canonicalPath}/com/schilderschris/gjsyntax/.antlr"
 
             file(parserPackagePath).mkdirs()
 
