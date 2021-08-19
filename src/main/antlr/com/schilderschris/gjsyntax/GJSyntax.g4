@@ -9,12 +9,183 @@
  */
 grammar GJSyntax;
 
-start : '1112' ID ID2 ID3 ;
+/*
+    Parser definitions
+*/
 
-ID : [a-z]+ ;
+script 
+    : componentDeclaration*
+    ;
 
-ID2 : [0-9]+ ;
+componentDeclaration
+	: COMPONENT ID LPAREN NL* parameters? NL* RPAREN block
+	;
 
-ID3 : [A-Z]+ ;
+parameters
+    : parameter (',' parameter)* (',' lastParameter)?
+    | lastParameter
+    ;
 
-WS : [ \t\r\n]+ -> skip ;
+parameter
+    : assignable COLON type (ASSIGNMENT expression)?
+    ;
+
+lastParameter
+    : SPREAD expression COLON type
+    ;
+
+block 
+    : LCURL NL* statements* NL* RCURL
+    ;
+
+statements 
+    : statement+
+    ;
+
+statement
+    : expressions
+    ;
+
+arguments
+    : '('(argument (',' argument)* ','?)?')'
+    ;
+
+argument
+    : SPREAD? (expression | ID)
+    ;
+
+expressions
+    : expression (',' expression)*
+    ;
+
+expression
+    : ID
+    | expression arguments
+    ;
+
+assignable
+    : ID
+    // | arrayLiteral
+    // | objectLiteral
+    ;
+
+type
+    : ID
+    | 'int'
+    | 'string'
+    | 'float'
+    | 'double'
+    ;
+
+/*
+    Lexer definitions
+*/
+
+// General
+
+WS
+    : [ \t\r\n]+ -> channel(HIDDEN)
+    ;
+
+NL
+    : '\n' | '\r' '\n'?
+    ;
+
+// Seperators and Operators
+
+SPREAD: '...';
+LPAREN: '(';
+RPAREN: ')';
+LSQUARE: '[';
+RSQUARE: ']';
+LCURL: '{';
+RCURL: '}';
+MULT: '*';
+MOD: '%';
+DIV: '/';
+ADD: '+';
+SUB: '-';
+INCR: '++';
+DECR: '--';
+CONJ: '&&';
+DISJ: '||';
+EXCL: '!';
+DOT: '.';
+COMMA: ',';
+COLON: ':';
+SEMICOLON: ';';
+ASSIGNMENT: '=';
+ADD_ASSIGNMENT: '+=';
+SUB_ASSIGNMENT: '-=';
+MULT_ASSIGNMENT: '*=';
+DIV_ASSIGNMENT: '/=';
+MOD_ASSIGNMENT: '%=';
+QUEST: '?';
+LANGLE: '<';
+RANGLE: '>';
+LE: '<=';
+GE: '>=';
+EXCL_EQ: '!=';
+EXCL_EQEQ: '!==';
+EQEQ: '==';
+EQEQEQ: '===';
+AT: '@';
+
+// Keywords
+
+COMPONENT: 'component';
+
+// Identifiers
+ID
+    : [a-zA-Z_] [a-zA-Z0-9_]*
+    ;
+
+// Literals
+
+fragment DecDigit: '0'..'9';
+fragment DecDigitNoZero: '1'..'9';
+fragment DoubleExponent: [eE] [+-]? DecDigit;
+
+RealLiteral
+    : FloatLiteral
+    | DoubleLiteral
+    ;
+
+FloatLiteral
+    : DoubleLiteral [fF]
+    | DecDigit [fF]
+    ;
+
+DoubleLiteral
+    : DecDigit? '.' DecDigit DoubleExponent?
+    | DecDigit DoubleExponent
+    ;
+
+IntegerLiteral
+    : DecDigit
+    ;
+
+BooleanLiteral
+    : 'true' | 'false'
+    ;
+
+NullLiteral
+    : 'null'
+    ;
+
+
+// fragment HexDigit: [0-9a-fA-F];
+
+
+// fragment BinDigit: [01];
+
+//
+//LQUOTE
+//    : '"' -> pushMode(LineString)
+//    ;
+//
+//mode LineString;
+//
+//RQUOTE
+//    : '"' -> popMode
+//    ;
