@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "antlr-debug",
+      "request": "launch",
+      "name": "Debug Current Grammar",
+      "input": "./src/main/resources/input.txt",
+      "visualParseTree": true,
+      "grammar": "./src/main/antlr/com/schilderschris/gjsyntax/GJSyntax.g4"
+    },
+    {
+      "type": "node-terminal",
+      "name": "Run Script: antlr4ts",
+      "request": "launch",
+      "command": "npm run antlr4ts",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
