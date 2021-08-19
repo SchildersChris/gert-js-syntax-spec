@@ -73,4 +73,5 @@ type
     | STRING
     | FLOAT
     | DOUBLE
+    | DOUBLE2
     ;

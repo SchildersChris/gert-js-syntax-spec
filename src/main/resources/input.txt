@@ -1,3 +1,3 @@
-component test(param1: string, param2: string) {
-    h1()
+component te1st(param1: double2, param2: string) {
+    h23()
 }

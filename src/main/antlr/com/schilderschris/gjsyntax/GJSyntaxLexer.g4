@@ -69,7 +69,7 @@ INT: 'int';
 FLOAT: 'float';
 STRING: 'string';
 DOUBLE: 'double';
-
+DOUBLE2: 'double2';
 
 // Identifiers
 ID
@@ -110,18 +110,18 @@ NullLiteral
     ;
 
 
-// fragment HexDigit: [0-9a-fA-F];
+fragment HexDigit: [0-9a-fA-F];
 
 
-// fragment BinDigit: [01];
+fragment BinDigit: [01];
 
-//
-//LQUOTE
-//    : '"' -> pushMode(LineString)
-//    ;
-//
-//mode LineString;
-//
-//RQUOTE
-//    : '"' -> popMode
-//    ;
+
+LQUOTE
+   : '"' -> pushMode(LineString)
+   ;
+
+mode LineString;
+
+RQUOTE
+   : '"' -> popMode
+   ;

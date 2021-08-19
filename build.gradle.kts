@@ -34,21 +34,6 @@ dependencies {
 tasks {
     generateGrammarSource {
         arguments = arguments + listOf("-visitor", "-package", "com.schilderschris.gjsyntax", "-Xexact-output-dir")
-
-        doLast {
-            val parserPackagePath = "${outputDirectory.canonicalPath}/com/schilderschris/gjsyntax/.antlr"
-
-            file(parserPackagePath).mkdirs()
-
-            copy {
-                from(outputDirectory.canonicalPath)
-                into(parserPackagePath)
-                include("GJSyntax*")
-            }
-            delete(fileTree(outputDirectory.canonicalPath) {
-                include("GJSyntax*")
-            })
-        }
     }
 
     compileKotlin {
