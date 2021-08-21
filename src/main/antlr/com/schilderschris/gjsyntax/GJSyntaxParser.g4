@@ -106,12 +106,12 @@ arrayElement
     ;
 
 propertyAssignment
-    : propertyName ':' expression
-    | '[' expression ']' ':' expression
+    : propertyName COLON expression
+    | LSQUARE expression RSQUARE COLON expression
     ;
 
 propertyName
     : ID
     | StringLiteral
-    | '[' expression ']'
+    | LSQUARE expression RSQUARE
     ;
