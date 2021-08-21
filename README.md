@@ -17,6 +17,4 @@ component test(test: object = {}) {
 ```
 
 Parse tree:
-
-![Alt text](Syntax Parse Tree)
-<img src="./res/GJSyntax.parse-tree.svg">
+<img src="./res/GJSyntax.parse-tree.jpg">
