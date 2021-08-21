@@ -1,3 +1,7 @@
 component test(test: object = {}) {
-    h1({df: "sss"})
+    h1("Hello Gert", { id: "gert" })
+    div {
+        p("Hello world1", { id: "p1" })
+        p("Hello world2", { id: "p2" })        
+    }
 }
