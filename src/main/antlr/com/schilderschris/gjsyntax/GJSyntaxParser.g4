@@ -5,11 +5,13 @@
  * GJSyntax is inspired by SwiftUI and Jetpack Compose where best of both worlds are
  * combined to create a simple DSL for the Gert-Js library.
  *
- * GJSyntax can be recognized by the @GJSyntax decorator on a js/ts function decleration.
+ * GJSyntax can be recognized by the `component` declerations inside a js/ts file.
  */
 parser grammar GJSyntaxParser;
 
 options { tokenVocab = GJSyntaxLexer; }
+
+// Rules
 
 script 
     : componentDeclaration*
@@ -32,7 +34,7 @@ lastParameter
     : SPREAD expression COLON type
     ;
 
-block 
+block
     : LCURL NL* statements* NL* RCURL
     ;
 
@@ -53,25 +55,63 @@ argument
     ;
 
 expressions
-    : expression (COMMA expression)*
+    : expression+
     ;
 
 expression
-    : ID
-    | expression arguments
+    : callExpression
+    | StringLiteral
+    | NumericLiteral
+    | objectLiteral
+    | arrayLiteral
+    ;
+
+callExpression
+    : ID arguments
+    | ID block
+    | ID arguments block
     ;
 
 assignable
     : ID
-    // | arrayLiteral
-    // | objectLiteral
+    | arrayLiteral
+    | objectLiteral
     ;
 
 type
     : ID
-    | INT
+    | NUMBER
     | STRING
-    | FLOAT
-    | DOUBLE
-    | DOUBLE2
+    | OBJECT
+    | ANY
+    ;
+
+
+// Object Literals
+
+arrayLiteral
+    : (LSQUARE elementList RSQUARE)
+    ;
+
+objectLiteral
+    : LCURL (propertyAssignment (COMMA propertyAssignment)* COMMA?)? RCURL
+    ;
+
+elementList
+    : COMMA* arrayElement? (COMMA+ arrayElement)* COMMA*
+    ;
+
+arrayElement
+    : SPREAD? expression
+    ;
+
+propertyAssignment
+    : propertyName ':' expression
+    | '[' expression ']' ':' expression
+    ;
+
+propertyName
+    : ID
+    | StringLiteral
+    | '[' expression ']'
     ;

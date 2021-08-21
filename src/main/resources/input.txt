@@ -1,3 +1,3 @@
-component te1st(param1: double2, param2: string) {
-    h23()
+component test(test: object = {}) {
+    h1({df: "sss"})
 }

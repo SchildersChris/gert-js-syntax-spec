@@ -5,7 +5,7 @@
  * GJSyntax is inspired by SwiftUI and Jetpack Compose where best of both worlds are
  * combined to create a simple DSL for the Gert-Js library.
  *
- * GJSyntax can be recognized by the @GJSyntax decorator on a js/ts function decleration.
+ * GJSyntax can be recognized by the `component` declerations inside a js/ts file.
  */
 lexer grammar GJSyntaxLexer;
 
@@ -62,16 +62,16 @@ AT: '@';
 // Keywords
 
 COMPONENT: 'component';
+ANY: 'any';
 
 // Types
 
-INT: 'int';
-FLOAT: 'float';
+NUMBER: 'number';
 STRING: 'string';
-DOUBLE: 'double';
-DOUBLE2: 'double2';
+OBJECT: 'object';
 
 // Identifiers
+
 ID
     : [a-zA-Z_] [a-zA-Z0-9_]*
     ;
@@ -79,25 +79,23 @@ ID
 // Literals
 
 fragment DecDigit: '0'..'9';
-fragment DecDigitNoZero: '1'..'9';
 fragment DoubleExponent: [eE] [+-]? DecDigit;
 
-RealLiteral
-    : FloatLiteral
-    | DoubleLiteral
+StringLiteral
+    : LQUOTE STRING_CONTENT* RQUOTE
     ;
 
-FloatLiteral
-    : DoubleLiteral [fF]
-    | DecDigit [fF]
+NumericLiteral
+    : DoubleLiteral
+    | IntegerLiteral
     ;
 
-DoubleLiteral
+fragment DoubleLiteral
     : DecDigit? '.' DecDigit DoubleExponent?
     | DecDigit DoubleExponent
     ;
 
-IntegerLiteral
+fragment IntegerLiteral
     : DecDigit
     ;
 
@@ -109,19 +107,16 @@ NullLiteral
     : 'null'
     ;
 
-
-fragment HexDigit: [0-9a-fA-F];
-
-
-fragment BinDigit: [01];
-
-
 LQUOTE
-   : '"' -> pushMode(LineString)
-   ;
+    : '"' -> pushMode(InString)
+    ;
 
-mode LineString;
+mode InString;
 
 RQUOTE
-   : '"' -> popMode
-   ;
+    : '"' -> popMode
+    ;
+
+STRING_CONTENT
+    : ~('\\' | '"')+
+    ;
