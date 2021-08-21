@@ -17,4 +17,5 @@ component test(test: object = {}) {
 ```
 
 Parse tree:  
+
 <img src="./res/GJSyntax.parse-tree.jpg">
