@@ -46,7 +46,7 @@ configure<PublishingExtension> {
     }
     repositories {
         maven {
-            name = project.name
+            name = "gertjs"
             credentials(PasswordCredentials::class)
             url = uri("https://panel.repsy.io/mvn/chrisschilders/gert-js/")
         }
