@@ -19,6 +19,15 @@ NL
     : '\n' | '\r' '\n'?
     ;
 
+LINE_COMMENT
+    : '//' .*? ('\n'|EOF) -> channel(HIDDEN)
+    ;
+
+BLOCK_COMMENT
+    : '/*' .*? '*/' -> channel(HIDDEN)
+    ;
+
+
 // Seperators and Operators
 
 SPREAD: '...';
@@ -59,10 +68,18 @@ EQEQ: '==';
 EQEQEQ: '===';
 AT: '@';
 
+
 // Keywords
 
 COMPONENT: 'component';
 ANY: 'any';
+TRUE: 'true';
+FALSE: 'false';
+NULL: 'null';
+VAR: 'var';
+LET: 'let';
+CONST: 'const';
+
 
 // Types
 
@@ -70,11 +87,13 @@ NUMBER: 'number';
 STRING: 'string';
 OBJECT: 'object';
 
+
 // Identifiers
 
 ID
     : [a-zA-Z_] [a-zA-Z0-9_]*
     ;
+
 
 // Literals
 
@@ -100,11 +119,11 @@ fragment IntegerLiteral
     ;
 
 BooleanLiteral
-    : 'true' | 'false'
+    : TRUE | FALSE
     ;
 
 NullLiteral
-    : 'null'
+    : NULL
     ;
 
 LQUOTE

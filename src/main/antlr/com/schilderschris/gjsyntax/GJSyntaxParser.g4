@@ -11,6 +11,7 @@ parser grammar GJSyntaxParser;
 
 options { tokenVocab = GJSyntaxLexer; }
 
+
 // Rules
 
 script 
@@ -18,8 +19,8 @@ script
     ;
 
 componentDeclaration
-	: COMPONENT ID LPAREN NL* parameters? NL* RPAREN block
-	;
+    : COMPONENT ID LPAREN NL* parameters? NL* RPAREN block
+    ;
 
 parameters
     : parameter (COMMA parameter)* (COMMA lastParameter)?
@@ -44,6 +45,7 @@ statements
 
 statement
     : expressions
+    | variableStatements
     ;
 
 arguments
@@ -66,6 +68,18 @@ expression
     | arrayLiteral
     ;
 
+variableStatements
+    : variableStatement+
+    ;
+
+variableStatement
+    : variableModifiers variableDeclaration (COMMA variableDeclaration)*
+    ;
+
+variableDeclaration
+    : assignable (ASSIGNMENT expression)? // ECMAScript 6: Array & Object Matching
+    ;
+
 callExpression
     : ID arguments
     | ID block
@@ -84,6 +98,12 @@ type
     | STRING
     | OBJECT
     | ANY
+    ;
+
+variableModifiers
+    : VAR
+    | LET
+    | CONST
     ;
 
 
