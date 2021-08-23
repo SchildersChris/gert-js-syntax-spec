@@ -2,6 +2,18 @@
 
 This repository consist of the GJSyntax specs written in ANTLR4. 
 
+# Usage 
+Groovy
+```groovy
+implementation 'com.schilderschris.gjsyntax:gert-js-syntax-spec:1.0-SNAPSHOT'
+```
+
+Kotlin DSL
+```kotlin
+implementation("com.schilderschris.gjsyntax:gert-js-syntax-spec:1.0-SNAPSHOT")
+```
+
+
 
 # Example
 
