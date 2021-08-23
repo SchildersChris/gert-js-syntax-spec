@@ -1,5 +1,7 @@
 # Gert-Js Syntax Specification
 
+![Release](https://github.com/SchildersChris/gert-js-syntax-spec/actions/workflows/Release/badge.svg)
+
 This repository consist of the GJSyntax specs written in ANTLR4. 
 
 # Usage 
