@@ -3,3 +3,4 @@
 .antlr
 node_modules
 build
+gradle.properties
