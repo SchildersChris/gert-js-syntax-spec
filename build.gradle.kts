@@ -1,12 +1,10 @@
 plugins {
     // Java support
-    id("java")
-    // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.5.10"
-    // gradle-intellij-plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
-    id("org.jetbrains.intellij") version "1.1.2"
+    java
     // parser/lexer plugin
-    id("antlr")
+    antlr
+    // Publishing
+    `maven-publish`
 }
 
 group = "com.schilderschris.gjsyntax"
@@ -18,7 +16,7 @@ repositories {
 
 sourceSets {
     main {
-        java.srcDir("src/main")
+        java.srcDir("src/main/antlr")
     }
     test {
         java.srcDir("src/test")
@@ -26,17 +24,31 @@ sourceSets {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
     antlr("org.antlr:antlr4:4.+")
 }
-
 
 tasks {
     generateGrammarSource {
         arguments = arguments + listOf("-visitor", "-package", "com.schilderschris.gjsyntax", "-Xexact-output-dir")
     }
 
-    compileKotlin {
+    compileJava {
         dependsOn("generateGrammarSource")
+    }
+}
+
+configure<PublishingExtension> {
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = project.name
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            name = project.name
+            credentials(PasswordCredentials::class)
+            url = uri("https://panel.repsy.io/mvn/chrisschilders/gert-js/")
+        }
     }
 }
