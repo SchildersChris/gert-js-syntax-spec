@@ -17,5 +17,5 @@ jobs:
       - name: Publish package
         run: gradle publish
         env:
-          MAVEN_USERNAME: ${{ secrets.REPSY_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.REPSY_PASSWORD }}
+          COM_SCHILDERSCHRIS_GJSYNTAX_gertjsUsername: ${{ secrets.REPSY_USERNAME }}
+          COM_SCHILDERSCHRIS_GJSYNTAX_gertjsPassword: ${{ secrets.REPSY_PASSWORD }}
