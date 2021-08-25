@@ -1,14 +1,12 @@
 plugins {
-    // Java support
     java
-    // parser/lexer plugin
     antlr
-    // Publishing
     `maven-publish`
+//    signing
 }
 
 group = "com.schilderschris.gjsyntax"
-version = "1.1-SNAPSHOT"
+version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -24,7 +22,7 @@ sourceSets {
 }
 
 dependencies {
-    antlr("org.antlr:antlr4:4.+")
+    antlr("org.antlr:antlr4:4.9.2")
 }
 
 tasks {
@@ -33,6 +31,10 @@ tasks {
     }
 
     compileJava {
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
+        options.encoding = "UTF-8"
+
         dependsOn("generateGrammarSource")
     }
 }
@@ -42,6 +44,24 @@ configure<PublishingExtension> {
         create<MavenPublication>("maven") {
             artifactId = project.name
             from(components["java"])
+
+            pom {
+                name.set("Gert-Js Syntax Specification")
+                description.set("GJSyntax specs written in ANTLR4.")
+                url.set("https://gert-js.vercel.app/")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("SchildersChris")
+                        name.set("Chris Schilders")
+                    }
+                }
+            }
         }
     }
     repositories {
@@ -52,3 +72,7 @@ configure<PublishingExtension> {
         }
     }
 }
+//
+//signing {
+//    sign(publishing.publications["maven"])
+//}
