@@ -98,6 +98,7 @@ type
     | STRING
     | OBJECT
     | ANY
+    | COMPONENT
     ;
 
 variableModifiers
