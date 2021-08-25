@@ -28,11 +28,11 @@ parameters
     ;
 
 parameter
-    : assignable COLON type (ASSIGNMENT expression)?
+    : assignable COLON type QUEST? (ASSIGNMENT expression)?
     ;
 
 lastParameter
-    : SPREAD expression COLON type
+    : SPREAD expression COLON type QUEST?
     ;
 
 block
